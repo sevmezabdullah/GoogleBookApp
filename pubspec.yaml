@@ -38,6 +38,8 @@ dependencies:
   provider: ^5.0.0
   sqflite:
   dio: ^5.4.0
+  # add this line to your dependencies
+  fluttertoast: ^8.2.4
 
 dev_dependencies:
   flutter_test:

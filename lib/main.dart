@@ -19,19 +19,19 @@ class BooksApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => FavoriteBooksProvider()),
+        ChangeNotifierProvider(create: (context) => BookServiceProvider()),
+      ],
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Books App',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-                create: (context) => FavoriteBooksProvider()),
-            ChangeNotifierProvider(create: (context) => BookServiceProvider())
-          ],
-          child: const TabView(),
-        ));
+        home: const TabView(),
+      ),
+    );
   }
 }

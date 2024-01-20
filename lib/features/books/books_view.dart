@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:googlebookapp/features/books/book_detail_view.dart';
 import 'package:googlebookapp/providers/books_provider.dart';
 
 import 'package:provider/provider.dart';
@@ -11,28 +12,43 @@ class Books extends StatefulWidget {
 }
 
 class _BooksState extends State<Books> {
+  final _controller = TextEditingController();
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Provider.of<BookServiceProvider>(context, listen: false)
-        .getBooks('subject=adventure');
+
+    if (_controller.text.isEmpty) {
+      Provider.of<BookServiceProvider>(context, listen: false)
+          .getBooks('intitle=horror');
+    } else {
+      Provider.of<BookServiceProvider>(context, listen: false)
+          .getBooks('intitle=${_controller.text}}');
+    }
   }
 
-  final _controller = TextEditingController();
+  void _onSearchChanged() {
+    setState(() {
+      Provider.of<BookServiceProvider>(context, listen: false)
+          .getBooks('intitle=${_controller.text}');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<BookServiceProvider>(
       builder: (context, bookService, child) {
-        print(bookService.books.length);
         return Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: _controller,
+                onChanged: (text) {
+                  _onSearchChanged();
+                },
                 decoration: InputDecoration(
-                  labelText: 'Search by book name, author or ISBN',
+                  labelText: 'Search by book name',
                   filled: true,
                   fillColor: Colors.white,
                   suffixIcon: IconButton(
@@ -58,34 +74,39 @@ class _BooksState extends State<Books> {
                 itemCount: bookService.books.length,
                 itemBuilder: (context, index) {
                   final book = bookService.books[index];
-                  return Card(
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        Expanded(
-                          child: Image.network(
-                            book.volumeInfo?.imageLinks?.thumbnail ??
-                                'https://via.placeholder.com/200',
-                            fit: BoxFit.fill,
-                          ),
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return BookDetailPage(book: book);
+                          },
                         ),
-                        Container(
-                          color: Colors.black.withOpacity(0.6),
-                          child: Text(
-                            book.volumeInfo?.title ?? '',
-                            style: TextStyle(color: Colors.white),
+                      );
+                    },
+                    child: Card(
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Image.network(
+                              book.volumeInfo?.imageLinks?.thumbnail ??
+                                  'https://via.placeholder.com/150',
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: IconButton(
-                            icon: Icon(Icons.favorite_border),
-                            onPressed: () {
-                              // Add to favorites
-                            },
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              book.volumeInfo?.title ?? '',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },
