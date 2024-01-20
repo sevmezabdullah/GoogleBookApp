@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:googlebookapp/widgets/TabView.dart';
 
 void main() {
-  runApp(BooksApp());
+  runApp(const BooksApp());
 }
 
 class BooksApp extends StatelessWidget {
+  const BooksApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
