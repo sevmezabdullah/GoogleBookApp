@@ -52,6 +52,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
             // Add to favorites
 
             // Provider.of<FavoriteBooksProvider>(context, listen: false).add(book);
+
             favoriteBookService.add(widget.book);
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(

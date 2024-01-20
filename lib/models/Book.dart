@@ -4,6 +4,9 @@ class Book {
   String? id;
   String? etag;
   String? selfLink;
+  String? title;
+  String? description;
+  String? imageLink;
   VolumeInfo? volumeInfo;
   SaleInfo? saleInfo;
   AccessInfo? accessInfo;
@@ -17,9 +20,15 @@ class Book {
       this.volumeInfo,
       this.saleInfo,
       this.accessInfo,
+      this.title,
+      this.description,
+      this.imageLink,
       this.searchInfo});
 
   Book.fromJson(Map<String, dynamic> json) {
+    title = json['title'];
+    description = json['description'];
+    imageLink = json['imageLink'];
     kind = json['kind'];
     id = json['id'];
     etag = json['etag'];

@@ -22,12 +22,33 @@ class _BookMarksState extends State<BookMarks> {
     return Consumer<FavoriteBooksProvider>(
       builder: (context, favoriteBooksProvider, child) {
         var favoriteBooks = favoriteBooksProvider.favorites;
+        print(favoriteBooks);
         return ListView.builder(
           itemCount: favoriteBooks.length,
           itemBuilder: (context, index) {
             var book = favoriteBooks[index];
+
             return ListTile(
-              title: Text(book.volumeInfo?.title ?? ""),
+              title: Text(book.title),
+              leading: Image.network(book.imageLink),
+              trailing: IconButton(
+                icon: Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                ),
+                onPressed: () {
+                  print(book.id);
+
+                  Provider.of<FavoriteBooksProvider>(context, listen: false)
+                      .remove(book);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Removed from favorites"),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                },
+              ),
               // Diğer özellikleri burada da listeleyebilirsiniz.
             );
           },

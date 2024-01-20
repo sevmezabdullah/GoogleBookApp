@@ -47,6 +47,8 @@ class DatabaseService {
   Future<List<Book>> getFavoriteBooks() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('favorite_books');
+
+    print(maps);
     return List.generate(maps.length, (i) {
       return Book.fromJson(maps[i]);
     });

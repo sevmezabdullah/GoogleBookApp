@@ -17,14 +17,10 @@ class _BooksState extends State<Books> {
   @override
   void initState() {
     super.initState();
-
-    if (_controller.text.isEmpty) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<BookServiceProvider>(context, listen: false)
-          .getBooks('intitle=horror');
-    } else {
-      Provider.of<BookServiceProvider>(context, listen: false)
-          .getBooks('intitle=${_controller.text}}');
-    }
+          .getBooks('intitle=murder');
+    });
   }
 
   void _onSearchChanged() {
@@ -54,7 +50,7 @@ class _BooksState extends State<Books> {
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.search),
                     onPressed: () {
-                      bookService.getBooks(_controller.text);
+                      bookService.getBooks('intitle=${_controller.text}');
                     },
                   ),
                   border: OutlineInputBorder(
@@ -69,11 +65,12 @@ class _BooksState extends State<Books> {
                   crossAxisCount: 2, // number of items per row
                   childAspectRatio: 3 / 2, // item width to height ratio
                   crossAxisSpacing: 10, // horizontal spacing between items
-                  mainAxisSpacing: 10, // vertical spacing between items
+                  mainAxisSpacing: 15, // vertical spacing between items
                 ),
                 itemCount: bookService.books.length,
                 itemBuilder: (context, index) {
                   final book = bookService.books[index];
+
                   return InkWell(
                     onTap: () {
                       Navigator.push(
@@ -92,11 +89,11 @@ class _BooksState extends State<Books> {
                             child: Image.network(
                               book.volumeInfo?.imageLinks?.thumbnail ??
                                   'https://via.placeholder.com/150',
-                              fit: BoxFit.cover,
+                              fit: BoxFit.contain,
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(4.0),
                             child: Text(
                               book.volumeInfo?.title ?? '',
                               textAlign: TextAlign.center,
