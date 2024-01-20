@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:googlebookapp/providers/books_provider.dart';
 import 'package:googlebookapp/widgets/TabView.dart';
+import 'package:provider/provider.dart';
+
+import 'providers/favorite_books_provider.dart';
 
 void main() {
   runApp(const BooksApp());
@@ -21,6 +25,13 @@ class BooksApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const TabView());
+        home: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+                create: (context) => FavoriteBooksProvider()),
+            ChangeNotifierProvider(create: (context) => BookServiceProvider())
+          ],
+          child: const TabView(),
+        ));
   }
 }

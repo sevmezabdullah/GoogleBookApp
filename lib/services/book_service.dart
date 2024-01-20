@@ -4,6 +4,8 @@ import 'package:googlebookapp/models/Book.dart';
 class BookService {
   Dio _dio;
 
+  List<Book> books = [];
+
   BookService() : _dio = Dio() {
     _dio = Dio();
   }
