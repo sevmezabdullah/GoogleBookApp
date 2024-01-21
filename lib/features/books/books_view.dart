@@ -25,7 +25,6 @@ class _BooksState extends State<Books> {
   }
 
   void _onSearchChanged() {
-    print(_controller.text);
     Provider.of<BookServiceProvider>(context, listen: false)
         .getBooks('intitle=${_controller.text}');
   }
