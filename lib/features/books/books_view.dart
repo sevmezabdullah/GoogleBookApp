@@ -17,17 +17,17 @@ class _BooksState extends State<Books> {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<BookServiceProvider>(context, listen: false)
-          .getBooks('intitle=murder');
+          .getBooks('intitle=javascript');
     });
   }
 
   void _onSearchChanged() {
-    setState(() {
-      Provider.of<BookServiceProvider>(context, listen: false)
-          .getBooks('intitle=${_controller.text}');
-    });
+    print(_controller.text);
+    Provider.of<BookServiceProvider>(context, listen: false)
+        .getBooks('intitle=${_controller.text}');
   }
 
   @override

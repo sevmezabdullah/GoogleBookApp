@@ -13,8 +13,14 @@ class BookService {
   Future<List<Book>> getBooks(String query) async {
     try {
       Response response = await _dio.get(
-          'https://www.googleapis.com/books/v1/volumes?q=intitle=$query&maxResults=20');
+        'https://www.googleapis.com/books/v1/volumes',
+        queryParameters: {
+          'q': query,
+          "maxResults": "40",
+        },
+      );
 
+      print(response.data);
       if (response.statusCode == 200) {
         List<dynamic> items = response.data['items'];
 
