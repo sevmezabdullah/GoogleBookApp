@@ -1,16 +1,31 @@
-# googlebookapp
+# Google Book App
 
-Google API Kullanılarak kitapların listelendiği favorilere eklendiği ve detaylarının görüntülendiği app
+Google Book App, Google Books API'yi kullanarak kitapları listeleyen, arama yapabilen ve favorilere ekleyebilen bir Flutter uygulamasıdır.
 
-## Getting Started
+## Özellikler
 
-This project is a starting point for a Flutter application.
+- Google Books API üzerinden kitapları listeleyin
+- Kitapları arayın ve sonuçları anında görüntüleyin
+- Kitapları favorilerinize ekleyin ve daha sonra okumak üzere saklayın
+- Kitapların detaylarını görüntüleyin
 
-A few resources to get you started if this is your first Flutter project:
+## Başlarken
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Bu projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Bu repo'yu klonlayın veya indirin
+2. Terminalde, projenin kök dizinine gidin
+3. `flutter pub get` komutunu çalıştırın
+4. Bir emülatörde veya gerçek bir cihazda `flutter run` komutunu çalıştırın
+
+## Ekran Görüntüleri
+
+Buraya uygulamanın ekran görüntülerini ekleyin
+
+## Katkıda Bulunma
+
+Bu projeye katkıda bulunmak isterseniz, lütfen önce [CONTRIBUTING.md](CONTRIBUTING.md) dosyasını okuyun.
+
+## Lisans
+
+Bu proje [MIT](LICENSE) lisansı altında lisanslanmıştır.
