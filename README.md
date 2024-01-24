@@ -20,7 +20,7 @@ Bu projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izley
 
 ## Ekran Görüntüleri
 
-Buraya uygulamanın ekran görüntülerini ekleyin
+![Task Tanıtım Videosudur](https://github.com/sevmezabdullah/GoogleBookApp/assets/39024317/5ac5cab9-db27-4117-afee-e37e0bffdafe)
 
 ## Katkıda Bulunma
 
