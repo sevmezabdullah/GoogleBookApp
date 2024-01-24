@@ -10,15 +10,16 @@ class BookService {
     _dio = Dio();
   }
 
-  Future<List<Book>> getBooks(String query) async {
+  Future<List<Book>> getBooks(String query, int startIndex) async {
     try {
       Response response = await _dio.get(
-        'https://www.googleapis.com/books/v1/volumes?q=$query',
+        'https://www.googleapis.com/books/v1/volumes?q=$query&maxResults=20&startIndex=$startIndex&orderBy=relevance',
       );
 
-      print(response.data);
       if (response.statusCode == 200) {
         List<dynamic> items = response.data['items'];
+
+        print(items);
 
         return items.map((item) => Book.fromJson(item)).toList();
       } else {

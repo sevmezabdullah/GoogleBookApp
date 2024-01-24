@@ -31,19 +31,9 @@ class Book {
     imageLink = json['imageLink'];
     kind = json['kind'];
     id = json['id'];
-    etag = json['etag'];
-    selfLink = json['selfLink'];
+
     volumeInfo = json['volumeInfo'] != null
         ? new VolumeInfo.fromJson(json['volumeInfo'])
-        : null;
-    saleInfo = json['saleInfo'] != null
-        ? new SaleInfo.fromJson(json['saleInfo'])
-        : null;
-    accessInfo = json['accessInfo'] != null
-        ? new AccessInfo.fromJson(json['accessInfo'])
-        : null;
-    searchInfo = json['searchInfo'] != null
-        ? new SearchInfo.fromJson(json['searchInfo'])
         : null;
   }
 

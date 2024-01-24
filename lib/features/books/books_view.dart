@@ -13,20 +13,48 @@ class Books extends StatefulWidget {
 
 class _BooksState extends State<Books> {
   final _controller = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
+  int pageIndex = 1;
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<BookServiceProvider>(context, listen: false)
-          .getBooks('intitle=javascript');
+      Provider.of<BookServiceProvider>(context, listen: false).getBooks(
+          'javascript',
+          Provider.of<BookServiceProvider>(context, listen: false).pageIndex);
+    });
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        Provider.of<BookServiceProvider>(context, listen: false)
+            .changePage(++pageIndex);
+        loadMore();
+      }
     });
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   void _onSearchChanged() {
-    Provider.of<BookServiceProvider>(context, listen: false)
-        .getBooks('intitle=${_controller.text}');
+    Provider.of<BookServiceProvider>(context, listen: false).getBooks(
+        '${_controller.text}',
+        Provider.of<BookServiceProvider>(context, listen: false).pageIndex);
+  }
+
+  void loadMore() {
+    print(
+        "index artırıldı ${Provider.of<BookServiceProvider>(context, listen: false).pageIndex}");
+    Provider.of<BookServiceProvider>(context, listen: false).getBooks(
+        '${_controller.text}',
+        Provider.of<BookServiceProvider>(context, listen: false).pageIndex);
   }
 
   @override
@@ -49,7 +77,7 @@ class _BooksState extends State<Books> {
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.search),
                     onPressed: () {
-                      bookService.getBooks('intitle=${_controller.text}');
+                      bookService.getBooks('${_controller.text}', pageIndex);
                     },
                   ),
                   border: OutlineInputBorder(
@@ -60,6 +88,7 @@ class _BooksState extends State<Books> {
             ),
             Expanded(
               child: GridView.builder(
+                controller: _scrollController,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, // number of items per row
                   childAspectRatio: 3 / 2, // item width to height ratio
@@ -94,7 +123,7 @@ class _BooksState extends State<Books> {
                           Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: Text(
-                              book.volumeInfo?.title ?? '',
+                              book.volumeInfo?.title ?? 'No title',
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
